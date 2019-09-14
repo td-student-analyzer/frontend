@@ -1,4 +1,9 @@
-.App {
+.App p {
+  color: black;
+  font-size: 15px;
+}
+
+.centered-text {
   text-align: center;
 }
 
@@ -9,7 +14,7 @@
   margin-bottom: 3vh;
 }
 
-.App-header {
+.Login-page {
   background-color: white;
   min-height: 100vh;
   display: flex;
@@ -18,6 +23,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  text-align: center;
 }
 
 .App-link {
