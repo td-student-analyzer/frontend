@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Jumbotron} from 'react-bootstrap';
+import { Container, Jumbotron, Row, Col } from 'react-bootstrap';
 import { Doughnut } from 'react-chartjs-2';
 import GaugeChart from 'react-gauge-chart'
 
@@ -67,7 +67,7 @@ const doughnutData = {
 function TagGauge(props) {
   if (isGaugeVisible) {
     return (
-      <div>
+      <div className="gauge-container">
         <GaugeChart id={"gauge-chart" + ++gauge_counter} textColor={'#000000'} nrOfLevels={20} percent={props.spendingRatio}/>
       </div>
     );
@@ -100,15 +100,28 @@ export default function Dashboard() {
             <h2 className="centered-text">Your spending breakdown</h2>
             <p className="centered-text">Click a region to expand.</p>
           </Jumbotron>
-          <div className="doughnut-container">
-            <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
-          </div>
-          <div className="gauge-container">
-            <TagGauge spendingRatio={spendingRatio1}></TagGauge>
-          </div>
-          <div className="gauge-container">
-            <TagGauge spendingRatio={spendingRatio2}></TagGauge>
-          </div>
+          <Container>
+            <div className="doughnut-container">
+              <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
+            </div>
+          </Container>
+          <Container>
+            <Row>
+              <Col>
+                <Row>
+                  <h2>Spending Relative to Other Students</h2>
+                  <TagGauge spendingRatio={spendingRatio1}></TagGauge>
+                </Row>
+                <Row>
+                  <h2>Spending Relative to Young Adults</h2>
+                  <TagGauge spendingRatio={spendingRatio2}></TagGauge>
+                </Row>
+              </Col>
+              <Col>
+                <p>Hello</p>
+              </Col>
+            </Row>
+          </Container>
           
         </div>
     );
