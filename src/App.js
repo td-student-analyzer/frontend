@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +13,33 @@ const textStyle = {
 };
 
 function App() {
+  return (
+    <Router>
+      <div>
+        {/* <Header /> */}
+        <Route exact path="/" component={Login} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/about" component={About} />
+      </div>
+    </Router>
+  );
+}
+
+// function Header() {
+//   return <h1>HEADER</h1>
+// }
+
+function Dashboard() {
+  return <h1>Dashboard</h1>
+}
+
+function About() {
+  return <ul>
+    <li><div>Icons made by <a href="https://www.flaticon.com/authors/payungkead" title="Payungkead">Payungkead</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div></li>
+  </ul>
+}
+
+function Login() {
   return (
     <div className="App">
       <header className="App-header">
