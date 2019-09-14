@@ -27,6 +27,11 @@
   text-align: center;
 }
 
+.doughnut-container {
+  width: 80%;
+  margin: 5% 10%;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -39,25 +44,7 @@
   border: 1px solid black;
 }
 
-/* @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-@media only screen and (min-width: 1000px) {
-  .doughnut-container {
-    width: 60%;
-    margin: 3% 20%;
-  }
-} 
-
-@media only screen and (min-width: 450px) {
-  .gauge-container {
-    width: 40%;
-    margin: 3% 30%;
-  }
-} 
+.gauge-container {
+  width: 60%;
+  margin: 3% 20%;
+}

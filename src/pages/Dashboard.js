@@ -101,11 +101,13 @@ export default function Dashboard() {
             <p className="centered-text">Click a region to expand.</p>
           </Jumbotron>
           <Container>
+          </Container>
+          <Container>
+			<Row>
             <div className="doughnut-container">
               <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
             </div>
-          </Container>
-          <Container>
+			</Row>
             <Row>
               <Col>
                 <Row>
