@@ -1,10 +1,14 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Jumbotron} from 'react-bootstrap';
 import { Doughnut } from 'react-chartjs-2';
 import GaugeChart from 'react-gauge-chart'
 
 var isGaugeVisible = true; // boolean that will change upon user clicking section
-var spendingRatio = 0.86;
 // TODO: Fetch from back-end
+var spendingRatio1 = 0.86; // dummy number for now
+var spendingRatio2 = 0.76;
+
 var customerTagRatios = [5, 5, 10, 10, 10, 10, 10, 40];
 var gauge_counter = 0;
 
@@ -60,11 +64,11 @@ const doughnutData = {
 	}]
 };
 
-function TagGauge() {
+function TagGauge(props) {
   if (isGaugeVisible) {
     return (
       <div>
-        <GaugeChart id={"gauge-chart" + ++gauge_counter} textColor={'#000000'} nrOfLevels={20} percent={spendingRatio}/>
+        <GaugeChart id={"gauge-chart" + ++gauge_counter} textColor={'#000000'} nrOfLevels={20} percent={props.spendingRatio}/>
       </div>
     );
   }
@@ -92,17 +96,20 @@ function generateTagBreakdown(elements) {
 export default function Dashboard() {
     return (
         <div>
-          <h2 className="centered-text">Your spending breakdown</h2>
-		      <p className="centered-text">Click a region to expand.</p>
+          <Jumbotron>
+            <h2 className="centered-text">Your spending breakdown</h2>
+            <p className="centered-text">Click a region to expand.</p>
+          </Jumbotron>
           <div className="doughnut-container">
             <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
           </div>
           <div className="gauge-container">
-            <TagGauge></TagGauge>
+            <TagGauge spendingRatio={spendingRatio1}></TagGauge>
           </div>
           <div className="gauge-container">
-            <TagGauge></TagGauge>
+            <TagGauge spendingRatio={spendingRatio2}></TagGauge>
           </div>
+          
         </div>
     );
 };
