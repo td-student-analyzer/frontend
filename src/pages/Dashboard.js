@@ -6,6 +6,7 @@ var isGaugeVisible = true; // boolean that will change upon user clicking sectio
 var spendingRatio = 0.86;
 // TODO: Fetch from back-end
 var customerTagRatios = [5, 5, 10, 10, 10, 10, 10, 40];
+var gauge_counter = 0;
 
 var tags = [
 	{
@@ -50,7 +51,7 @@ var tags = [
 	},
 ];
 
-const donutData = {
+const doughnutData = {
 	labels: tags.map(tag => tag.name),
 	datasets: [{
 		data: customerTagRatios,
@@ -63,7 +64,7 @@ function TagGauge() {
   if (isGaugeVisible) {
     return (
       <div>
-        <GaugeChart id="gauge-chart2" textColor={'#000000'} nrOfLevels={20} percent={spendingRatio}/>
+        <GaugeChart id={"gauge-chart" + ++gauge_counter} textColor={'#000000'} nrOfLevels={20} percent={spendingRatio}/>
       </div>
     );
   }
@@ -91,10 +92,17 @@ function generateTagBreakdown(elements) {
 export default function Dashboard() {
     return (
         <div>
-          <h2>Your spending breakdown</h2>
-		      <p>Click to expand.</p>
-          <Doughnut data={donutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
-          <TagGauge></TagGauge>
+          <h2 className="centered-text">Your spending breakdown</h2>
+		      <p className="centered-text">Click a region to expand.</p>
+          <div className="doughnut-container">
+            <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
+          </div>
+          <div className="gauge-container">
+            <TagGauge></TagGauge>
+          </div>
+          <div className="gauge-container">
+            <TagGauge></TagGauge>
+          </div>
         </div>
     );
 };
