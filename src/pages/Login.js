@@ -9,8 +9,8 @@ export default function Login() {
     return (
         <header 
           className="Login-page"
-          style={{ minHeight: 750, padding: '1em 0em' , backgroundImage: `url(${Background1})`, 
-            backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'}}
+          style={{ padding: '1em 0em' , backgroundImage: `url(${Background1})`, 
+            backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', boxSizing: 'unset !important' }}
         >
           <Card style={{ width: '33%', padding: '5%', backgroundColor: '#414141', opacity: '0.85', borderRadius: '50px' }}>
             <img src={logo} className="App-logo" alt="logo" />
@@ -30,7 +30,7 @@ export default function Login() {
               </Form>
             </Card>
           <div style={{backgroundColor: 'white'}}>
-            
+       
           </div>
         </header>
     );
