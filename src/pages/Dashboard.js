@@ -5,11 +5,19 @@ import { Doughnut } from 'react-chartjs-2';
 import GaugeChart from 'react-gauge-chart'
 import Background1 from '../backgrounds/td-centre.jpg';
 
-
-var spendingRatio1 = 0.86;
-var spendingRatio2 = 0.76;
-
 var gauge_counter = 0;
+
+// THESE ARE FOR RATIOS
+var tagMap = {
+  "Education": "education",
+  "Auto and Transportation": "transport",
+  "Bills and Utilties": "bills",
+  "Entertainment": "entertainment",
+  "Food and Dining": "food",
+  "Shopping": "shopping",
+  "Other": "other",
+  "Savings": "balanceRatio"
+};
 
 var tags = [
 	{
@@ -125,7 +133,13 @@ export default class Dashboard extends React.Component {
 // TODO: Render tag gauge
   generateTagBreakdown = (elements) => {
     var tag = this.getClickedTagFromDonutChart(elements);
-    this.setState({isGaugeVisible: tag!="Savings"});
+    var data = this.state.data;
+    this.setState({
+      isGaugeVisible: tag!="Savings",
+      spendingRatio1: data.currentCustomer[tagMap[tag]] / (data.studentAverage[tagMap[tag]] * 2),
+      spendingRatio2: data.currentCustomer[tagMap[tag]] / (data.adultAverage[tagMap[tag]] * 2)
+    });
+
   }
 
   render = () => {
@@ -150,14 +164,14 @@ export default class Dashboard extends React.Component {
 		  <Row>
       {this.state.isGaugeVisible ? (
        <Col className="border-r">
-       <Row className="border-b">
-       <h2 className="centered-text">Spending Relative to Other Students</h2>
-       <TagGauge spendingRatio={spendingRatio1}></TagGauge>
-       </Row>
-       <Row>
-       <h2 className="centered-text">Spending Relative to Young Adults</h2>
-       <TagGauge spendingRatio={spendingRatio2}></TagGauge>
-       </Row>
+        <Row className="border-b">
+        <h2 className="centered-text">Spending Relative to Other Students</h2>
+        <TagGauge spendingRatio={this.state.spendingRatio1}></TagGauge>
+        </Row>
+        <Row>
+        <h2 className="centered-text">Spending Relative to Young Adults</h2>
+        <TagGauge spendingRatio={this.state.spendingRatio2}></TagGauge>
+        </Row>
       </Col>   
       ) : null}
 			<Col>
