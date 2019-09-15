@@ -97,14 +97,14 @@ export default class Dashboard extends React.Component {
     .then(response => response.json())
       .then(response => this.setState({
         doughnutData: [
-          response.currentCustomer.totalEducation, 
-          response.currentCustomer.totalTransport,
-          response.currentCustomer.totalBills,
-          response.currentCustomer.totalEntertainment,
-          response.currentCustomer.totalFood,
-          response.currentCustomer.totalShopping,
-          response.currentCustomer.totalOther,
-          response.currentCustomer.balance
+          response.currentCustomer.totalEducation.toFixed(2), 
+          response.currentCustomer.totalTransport.toFixed(2),
+          response.currentCustomer.totalBills.toFixed(2),
+          response.currentCustomer.totalEntertainment.toFixed(2),
+          response.currentCustomer.totalFood.toFixed(2),
+          response.currentCustomer.totalShopping.toFixed(2),
+          response.currentCustomer.totalOther.toFixed(2),
+          response.currentCustomer.balance.toFixed(2)
         ],
         data: response
       }));
@@ -172,7 +172,7 @@ export default class Dashboard extends React.Component {
 		</Jumbotron>
 		<Container className="border-a" style={{ background: 'rgb(247, 247, 247)'}}>
 		  <h2 className="centered-text" style={{ marginTop: '3%' }}>Personal Breakdown</h2>
-		  <Row className="border-b">
+		  <Row className="border-b" style={{ paddingBottom: '3%' }}>
 			<div className="doughnut-container">
 			  <Doughnut data={this.getDoughnutConfig()} onElementsClick={elems => this.generateTagBreakdown(elems)}/>
 			</div>
@@ -193,7 +193,7 @@ export default class Dashboard extends React.Component {
       </Col>   
       ) : null}
       {this.state.isTransactionsVisible && this.state.transactions ? (
-        <Col style={{maxHeight: '350px', overflow: 'auto'}}>
+        <Col style={{maxHeight: '250px', overflow: 'auto'}}>
 			  <h3 className="centered-text">List of Transactions</h3>
 			  <Table striped bordered hover responsive>
 				<thead>
@@ -209,7 +209,7 @@ export default class Dashboard extends React.Component {
               <tr>
               <td>{transaction.originationDateTime}</td>
               <td>{transaction.description}</td>
-              <td>$ {transaction.currencyAmount * -1}</td>
+              <td>$ {transaction.currencyAmount}</td>
               </tr>
             )
           })}
