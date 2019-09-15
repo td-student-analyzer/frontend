@@ -12,14 +12,14 @@ export default class App extends React.Component {
     this.state = { customerId: null }
   }
 
-  setCustomerId = (custId) => {
-    this.setState({ customerId: custId })
+  setCustomerId = (custId, callback) => {
+    this.setState({ customerId: custId }, callback);
   }
 
   loginHandler = () => {
-    console.log(document.getElementById("customerId").value);
-    this.setCustomerId(document.getElementById("customerId").value);
-    window.location.href = window.location.href + "dashboard";
+    this.setCustomerId(document.getElementById("customerId").value, () =>  {
+      window.location.href = "http://localhost:3000/dashboard?customerId=" + this.state.customerId;
+    })
   }
 
   render() {

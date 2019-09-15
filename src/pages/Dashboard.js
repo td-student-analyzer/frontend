@@ -94,57 +94,65 @@ function generateTagBreakdown(elements) {
 	var tag = getClickedTagFromDonutChart(elements);
 }
 
-export default function Dashboard() {
-  return (
-    <div style={{background: 'white'}}>
-      <Jumbotron
-        style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.9)), url(${Background1})`, 
-        backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'}}
-      >
-        <h2 className="centered-text">Your Spending Breakdown</h2>
-        <p className="centered-text">Scroll down to view your data</p>
-      </Jumbotron>
-      <Container className="border-a" style={{ background: 'rgb(247, 247, 247)'}}>
-        <h2 className="centered-text" style={{ marginTop: '3%' }}>Personal Breakdown</h2>
-        <Row className="border-b">
-          <div className="doughnut-container">
-            <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
-          </div>
-        </Row>
-        <Row>
-          <Col className="border-r">
-            <Row className="border-b">
-              <h2 className="centered-text">Spending Relative to Other Students</h2>
-              <TagGauge spendingRatio={spendingRatio1}></TagGauge>
-            </Row>
-            <Row>
-              <h2 className="centered-text">Spending Relative to Young Adults</h2>
-              <TagGauge spendingRatio={spendingRatio2}></TagGauge>
-            </Row>
-          </Col>
-          <Col>
-            <h2 className="centered-text">List of Transactions</h2>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Account</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>*** VISA</td>
-                  <td>Tim Hortons</td>
-                  <td>$3.21</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+export default class Dashboard extends React.Component {
+  constructor(props) {
+	  super(props);
+	  this.state = { customerId: new URL(window.location.href).searchParams.get("customerId")}
+  }
+
+  render = () => {
+	console.log(this.state)
+	return (
+	  <div style={{background: 'white'}}>
+		<Jumbotron
+		  style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.9)), url(${Background1})`, 
+		  backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'}}
+		>
+		  <h2 className="centered-text">Your Spending Breakdown</h2>
+		  <p className="centered-text">Scroll down to view your data</p>
+		</Jumbotron>
+		<Container className="border-a" style={{ background: 'rgb(247, 247, 247)'}}>
+		  <h2 className="centered-text" style={{ marginTop: '3%' }}>Personal Breakdown</h2>
+		  <Row className="border-b">
+			<div className="doughnut-container">
+			  <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
+			</div>
+		  </Row>
+		  <Row>
+			<Col className="border-r">
+			  <Row className="border-b">
+				<h2 className="centered-text">Spending Relative to Other Students</h2>
+				<TagGauge spendingRatio={spendingRatio1}></TagGauge>
+			  </Row>
+			  <Row>
+				<h2 className="centered-text">Spending Relative to Young Adults</h2>
+				<TagGauge spendingRatio={spendingRatio2}></TagGauge>
+			  </Row>
+			</Col>
+			<Col>
+			  <h2 className="centered-text">List of Transactions</h2>
+			  <Table striped bordered hover responsive>
+				<thead>
+				  <tr>
+					<th>Date</th>
+					<th>Account</th>
+					<th>Description</th>
+					<th>Amount</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr>
+					<td>1</td>
+					<td>*** VISA</td>
+					<td>Tim Hortons</td>
+					<td>$3.21</td>
+				  </tr>
+				</tbody>
+			  </Table>
+			</Col>
+		  </Row>
+		</Container>
+	  </div>
+	);
+  }
 };
