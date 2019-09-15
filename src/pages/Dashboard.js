@@ -75,7 +75,8 @@ export default class Dashboard extends React.Component {
 	  super(props);
     this.state = { 
       customerId: new URL(window.location.href).searchParams.get("customerId"),
-      isGaugeVisible: false
+      isGaugeVisible: false,
+      isTransactionsVisible: false
     }
   }
 
@@ -134,8 +135,25 @@ export default class Dashboard extends React.Component {
   generateTagBreakdown = (elements) => {
     var tag = this.getClickedTagFromDonutChart(elements);
     var data = this.state.data;
+
+    fetch("http://localhost:8080/transactionsByTags", {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Access-Control-Allow-Origin':'*',
+          'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrer: 'no-referrer',
+      body: JSON.stringify({custId: this.state.customerId, tag: tag}), 
+    }).then((response => response.json()))
+    .then(response => this.setState({ transactions: response} ));
+
     this.setState({
       isGaugeVisible: tag!=="Savings",
+      isTransactionsVisible: tag!=="Savings",
       spendingRatio1: data.currentCustomer[tagMap[tag]] / (data.studentAverage[tagMap[tag]]),
       spendingRatio2: data.currentCustomer[tagMap[tag]] / (data.adultAverage[tagMap[tag]])
     });
@@ -174,27 +192,33 @@ export default class Dashboard extends React.Component {
         </Row>
       </Col>   
       ) : null}
-			<Col>
+      {this.state.isTransactionsVisible && this.state.transactions ? (
+        <Col style={{maxHeight: '350px', overflow: 'auto'}}>
 			  <h3 className="centered-text">List of Transactions</h3>
 			  <Table striped bordered hover responsive>
 				<thead>
 				  <tr>
 					<th>Date</th>
-					<th>Account</th>
 					<th>Description</th>
 					<th>Amount</th>
 				  </tr>
 				</thead>
 				<tbody>
-				  <tr>
-					<td>1</td>
-					<td>*** VISA</td>
-					<td>Tim Hortons</td>
-					<td>$3.21</td>
-				  </tr>
+          {this.state.transactions.map(function(transaction, i) {
+            return (
+              <tr>
+              <td>{transaction.originationDateTime}</td>
+              <td>{transaction.description}</td>
+              <td>$ {transaction.currencyAmount * -1}</td>
+              </tr>
+            )
+          })}
+				  
 				</tbody>
 			  </Table>
-			</Col>
+			  </Col>
+      ) : null}
+			
 		  </Row>
 		</Container>
 	  </div>
