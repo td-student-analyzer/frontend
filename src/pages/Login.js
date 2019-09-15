@@ -5,8 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, Card} from 'react-bootstrap';
 import Background1 from '../backgrounds/td-centre.jpg';
 
-export default function Login() {
-    return (
+export default class Login extends React.Component {
+    constructor(props) {
+      super(props);
+    }
+
+    render() {
+      return (
         <header 
           className="Login-page"
           style={{ minHeight: 750, padding: '1em 0em' , backgroundImage: `url(${Background1})`, 
@@ -21,10 +26,10 @@ export default function Login() {
                 Enter your Customer ID to analyze your spending habits.
               </p> 
               <Form className="LoginForm">
-                <Form.Group controlId="formCustomerId" style={{ width: '70%', margin: '1% 15%' }}>
-                  <Form.Control type="id" placeholder="Customer ID" />
+                <Form.Group style={{ width: '70%', margin: '1% 15%' }}>
+                  <Form.Control type="id" id="customerId" placeholder="Customer ID" name={"test"}/>
                 </Form.Group>
-                <Button variant="dark" type="submit">
+                <Button variant="dark" type="button" onClick={this.props.loginHandler}>
                   Submit
                 </Button>
               </Form>
@@ -34,4 +39,5 @@ export default function Login() {
           </div>
         </header>
     );
+    }
   }

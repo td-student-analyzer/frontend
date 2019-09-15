@@ -5,16 +5,34 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Route exact path="/" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/about" component={About} />
-      </div>
-    </Router>
-  );
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.SERVER_URL = "https://localhost:3000";
+    this.state = { customerId: null }
+  }
+
+  setCustomerId = (custId) => {
+    this.setState({ customerId: custId })
+  }
+
+  loginHandler = () => {
+    console.log(document.getElementById("customerId").value);
+    this.setCustomerId(document.getElementById("customerId").value);
+    window.location.href = window.location.href + "dashboard";
+  }
+
+  render() {
+    return (
+      <Router>
+        <div className="App">
+          <Route exact path="/" component={() => <Login loginHandler={this.loginHandler} />} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/about" component={About} />
+        </div>
+      </Router>
+    );
+  }
 }
 
 function About() {
@@ -23,4 +41,3 @@ function About() {
   </ul>
 }
 
-export default App;
