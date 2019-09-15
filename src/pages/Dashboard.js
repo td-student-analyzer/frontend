@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Jumbotron, Row, Col } from 'react-bootstrap';
 import { Doughnut } from 'react-chartjs-2';
 import GaugeChart from 'react-gauge-chart'
+import Background1 from '../backgrounds/td-centre.jpg';
 
 var isGaugeVisible = true; // boolean that will change upon user clicking section
 // TODO: Fetch from back-end
@@ -95,12 +96,16 @@ function generateTagBreakdown(elements) {
 
 export default function Dashboard() {
     return (
-        <div>
-          <Jumbotron>
-            <h2 className="centered-text">Your spending breakdown</h2>
-            <p className="centered-text">Click a region to expand.</p>
+        <div style={{background: 'white'}}>
+          <Jumbotron
+            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.9)), url(${Background1})`, 
+            backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'}}
+          >
+            <h2 className="centered-text">Your Spending Breakdown</h2>
+            <p className="centered-text">Scroll down to view your data</p>
           </Jumbotron>
-          <Container className="border-a">
+          <Container className="border-a" style={{ background: 'rgb(247, 247, 247)'}}>
+            <h2 className="centered-text" style={{ marginTop: '3%' }}>Personal Breakdown</h2>
 			      <Row className="border-b">
               <div className="doughnut-container">
                 <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>

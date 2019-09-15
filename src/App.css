@@ -1,3 +1,7 @@
+* {
+  font-family: "Webly Sleek SemiLight",Helvetica-,droid sans,sans-serif;
+}
+
 .App p {
   color: black;
   font-size: 15px;
@@ -5,7 +9,10 @@
 
 .centered-text {
   text-align: center;
+  width: 100%;
   margin: 2vh;
+  font-weight: 100;
+  color: black;
 }
 
 .App-logo {
@@ -29,7 +36,7 @@
 
 .doughnut-container {
   width: 80%;
-  margin: 5% 10%;
+  margin: 2% 10%;
 }
 
 .App-link {
@@ -37,23 +44,23 @@
 }
 
 .border-a {
-  border: 1px solid black;
+  border: 3px solid white;
 }
 
 .border-b {
-  border-bottom: 1px solid black;
+  border-bottom: 3px solid white;
 }
 
 .border-t {
-  border-top: 1px solid black;
+  border-top: 3px solid white;
 }
 
 .border-l {
-  border-left: 1px solid black;
+  border-left: 3px solid white;
 }
 
 .border-r {
-  border-right: 1px solid black;
+  border-right: 3px solid white;
 }
 
 .gauge-container {
