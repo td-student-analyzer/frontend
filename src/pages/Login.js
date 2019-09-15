@@ -14,8 +14,8 @@ export default class Login extends React.Component {
       return (
         <header 
           className="Login-page"
-          style={{ minHeight: 750, padding: '1em 0em' , backgroundImage: `url(${Background1})`, 
-            backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center'}}
+          style={{ padding: '1em 0em' , backgroundImage: `url(${Background1})`, 
+            backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center', boxSizing: 'unset !important' }}
         >
           <Card style={{ width: '33%', padding: '5%', backgroundColor: '#414141', opacity: '0.85', borderRadius: '50px' }}>
             <img src={logo} className="App-logo" alt="logo" />
@@ -23,11 +23,11 @@ export default class Login extends React.Component {
                 className="centered-text"
                 style={{ color: 'white' }}
               >
-                Enter your Customer ID to analyze your spending habits.
+                Enter your Customer ID to analyze your spending habits
               </p> 
               <Form className="LoginForm">
-                <Form.Group style={{ width: '70%', margin: '1% 15%' }}>
-                  <Form.Control type="id" id="customerId" placeholder="Customer ID" name={"test"}/>
+                <Form.Group style={{ width: '70%', margin: '3% 15%' }}>
+                  <Form.Control type="id" id="customerId" placeholder="Customer ID" />
                 </Form.Group>
                 <Button variant="dark" type="button" onClick={this.props.loginHandler}>
                   Submit
@@ -35,7 +35,7 @@ export default class Login extends React.Component {
               </Form>
             </Card>
           <div style={{backgroundColor: 'white'}}>
-            
+       
           </div>
         </header>
     );
