@@ -6,9 +6,6 @@ import { Button, Form, Card} from 'react-bootstrap';
 import Background1 from '../backgrounds/td-centre.jpg';
 
 export default class Login extends React.Component {
-    constructor(props) {
-      super(props);
-    }
 
     render() {
       return (

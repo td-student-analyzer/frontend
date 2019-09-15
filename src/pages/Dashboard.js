@@ -135,16 +135,14 @@ export default class Dashboard extends React.Component {
     var tag = this.getClickedTagFromDonutChart(elements);
     var data = this.state.data;
     this.setState({
-      isGaugeVisible: tag!="Savings",
-      spendingRatio1: data.currentCustomer[tagMap[tag]] / (data.studentAverage[tagMap[tag]] * 2),
-      spendingRatio2: data.currentCustomer[tagMap[tag]] / (data.adultAverage[tagMap[tag]] * 2)
+      isGaugeVisible: tag!=="Savings",
+      spendingRatio1: data.currentCustomer[tagMap[tag]] / (data.studentAverage[tagMap[tag]]),
+      spendingRatio2: data.currentCustomer[tagMap[tag]] / (data.adultAverage[tagMap[tag]])
     });
 
   }
 
   render = () => {
-  console.log(this.state.doughnutData)
-  console.log(this.state.data)
 	return (
 	  <div style={{background: 'white'}}>
 		<Jumbotron
@@ -165,17 +163,19 @@ export default class Dashboard extends React.Component {
       {this.state.isGaugeVisible ? (
        <Col className="border-r">
         <Row className="border-b">
-        <h2 className="centered-text">Spending Relative to Other Students</h2>
-        <TagGauge spendingRatio={this.state.spendingRatio1}></TagGauge>
+        <h3 className="centered-text">Spending Relative to Average Student</h3>
+        {/* <TagGauge spendingRatio={this.state.spendingRatio1}></TagGauge> */}
+        <h2 className="centered-text">{this.state.spendingRatio1.toFixed(2)}x</h2>
         </Row>
         <Row>
-        <h2 className="centered-text">Spending Relative to Young Adults</h2>
-        <TagGauge spendingRatio={this.state.spendingRatio2}></TagGauge>
+        <h3 className="centered-text">Spending Relative to Average Young Adult</h3>
+        {/* <TagGauge spendingRatio={this.state.spendingRatio2}></TagGauge> */}
+        <h2 className="centered-text">{this.state.spendingRatio2.toFixed(2)}x</h2>
         </Row>
       </Col>   
       ) : null}
 			<Col>
-			  <h2 className="centered-text">List of Transactions</h2>
+			  <h3 className="centered-text">List of Transactions</h3>
 			  <Table striped bordered hover responsive>
 				<thead>
 				  <tr>
