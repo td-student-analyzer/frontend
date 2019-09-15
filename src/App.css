@@ -36,12 +36,24 @@
   color: #61dafb;
 }
 
-.row {
+.border-a {
   border: 1px solid black;
 }
 
-.col {
-  border: 1px solid black;
+.border-b {
+  border-bottom: 1px solid black;
+}
+
+.border-t {
+  border-top: 1px solid black;
+}
+
+.border-l {
+  border-left: 1px solid black;
+}
+
+.border-r {
+  border-right: 1px solid black;
 }
 
 .gauge-container {

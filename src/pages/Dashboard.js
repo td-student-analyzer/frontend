@@ -100,27 +100,25 @@ export default function Dashboard() {
             <h2 className="centered-text">Your spending breakdown</h2>
             <p className="centered-text">Click a region to expand.</p>
           </Jumbotron>
-          <Container>
-          </Container>
-          <Container>
-			<Row>
-            <div className="doughnut-container">
-              <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
-            </div>
-			</Row>
+          <Container className="border-a">
+			      <Row className="border-b">
+              <div className="doughnut-container">
+                <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
+              </div>
+			      </Row>
             <Row>
-              <Col>
-                <Row>
-                  <h2>Spending Relative to Other Students</h2>
+              <Col className="border-r">
+                <Row className="border-b">
+                  <h2 className="centered-text">Spending Relative to Other Students</h2>
                   <TagGauge spendingRatio={spendingRatio1}></TagGauge>
                 </Row>
                 <Row>
-                  <h2>Spending Relative to Young Adults</h2>
+                  <h2 className="centered-text">Spending Relative to Young Adults</h2>
                   <TagGauge spendingRatio={spendingRatio2}></TagGauge>
                 </Row>
               </Col>
               <Col>
-                <p>Hello</p>
+                <h2 className="centered-text">List of Transactions</h2>
               </Col>
             </Row>
           </Container>
