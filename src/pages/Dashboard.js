@@ -5,12 +5,10 @@ import { Doughnut } from 'react-chartjs-2';
 import GaugeChart from 'react-gauge-chart'
 import Background1 from '../backgrounds/td-centre.jpg';
 
-var isGaugeVisible = true; // boolean that will change upon user clicking section
-// TODO: Fetch from back-end
-var spendingRatio1 = 0.86; // dummy number for now
+
+var spendingRatio1 = 0.86;
 var spendingRatio2 = 0.76;
 
-var customerTagRatios = [5, 5, 10, 10, 10, 10, 10, 40];
 var gauge_counter = 0;
 
 var tags = [
@@ -56,52 +54,83 @@ var tags = [
 	},
 ];
 
-const doughnutData = {
-	labels: tags.map(tag => tag.name),
-	datasets: [{
-		data: customerTagRatios,
-		backgroundColor: tags.map(tag => tag.backgroundColor),
-		hoverBackgroundColor: tags.map(tag => tag.hoverBackgroundColor)
-	}]
-};
-
 function TagGauge(props) {
-	if (isGaugeVisible) {
-		return (
-			<div className="gauge-container">
-				<GaugeChart id={"gauge-chart" + ++gauge_counter} textColor={'#000000'} nrOfLevels={20} percent={props.spendingRatio} />
-			</div>
-		);
-	}
-	else {
-		return null;
-	}
-}
-
-/**
- * Gets the name of the tag clicked by the user in the donut chart
- */
-function getClickedTagFromDonutChart(elements) {
-	if (elements.length === 0) {
-		return;
-	}
-	var index = elements[0]._index;
-	return tags[index].name;
-}
-
-// TODO: Render tag gauge
-function generateTagBreakdown(elements) {
-	var tag = getClickedTagFromDonutChart(elements);
+  return (
+    <div className="gauge-container">
+      <GaugeChart id={"gauge-chart" + ++gauge_counter} textColor={'#000000'} nrOfLevels={20} percent={props.spendingRatio} />
+    </div>
+  );
 }
 
 export default class Dashboard extends React.Component {
   constructor(props) {
 	  super(props);
-	  this.state = { customerId: new URL(window.location.href).searchParams.get("customerId")}
+    this.state = { 
+      customerId: new URL(window.location.href).searchParams.get("customerId"),
+      isGaugeVisible: false
+    }
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:8080/processCustomer", {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Access-Control-Allow-Origin':'*',
+            'Content-Type': 'application/json',
+        },
+        redirect: 'follow',
+        referrer: 'no-referrer',
+        body: JSON.stringify({custId: this.state.customerId}), 
+    })
+    .then(response => response.json())
+      .then(response => this.setState({
+        doughnutData: [
+          response.currentCustomer.totalEducation, 
+          response.currentCustomer.totalTransport,
+          response.currentCustomer.totalBills,
+          response.currentCustomer.totalEntertainment,
+          response.currentCustomer.totalFood,
+          response.currentCustomer.totalShopping,
+          response.currentCustomer.totalOther,
+          response.currentCustomer.balance
+        ],
+        data: response
+      }));
+  }
+
+  getDoughnutConfig = () => {
+    return {
+    labels: tags.map(tag => tag.name),
+    datasets: [{
+      data: this.state.doughnutData,
+      backgroundColor: tags.map(tag => tag.backgroundColor),
+      hoverBackgroundColor: tags.map(tag => tag.hoverBackgroundColor)
+    }]}
+  };
+
+  /**
+ * Gets the name of the tag clicked by the user in the donut chart
+ */
+  getClickedTagFromDonutChart= (elements) => {
+    if (elements.length === 0) {
+      return;
+    }
+    var index = elements[0]._index;
+    return tags[index].name;
+  }
+
+// TODO: Render tag gauge
+  generateTagBreakdown = (elements) => {
+    var tag = this.getClickedTagFromDonutChart(elements);
+    this.setState({isGaugeVisible: tag!="Savings"});
   }
 
   render = () => {
-	console.log(this.state)
+  console.log(this.state.doughnutData)
+  console.log(this.state.data)
 	return (
 	  <div style={{background: 'white'}}>
 		<Jumbotron
@@ -115,20 +144,22 @@ export default class Dashboard extends React.Component {
 		  <h2 className="centered-text" style={{ marginTop: '3%' }}>Personal Breakdown</h2>
 		  <Row className="border-b">
 			<div className="doughnut-container">
-			  <Doughnut data={doughnutData} onElementsClick={elems => generateTagBreakdown(elems)}/>
+			  <Doughnut data={this.getDoughnutConfig()} onElementsClick={elems => this.generateTagBreakdown(elems)}/>
 			</div>
 		  </Row>
 		  <Row>
-			<Col className="border-r">
-			  <Row className="border-b">
-				<h2 className="centered-text">Spending Relative to Other Students</h2>
-				<TagGauge spendingRatio={spendingRatio1}></TagGauge>
-			  </Row>
-			  <Row>
-				<h2 className="centered-text">Spending Relative to Young Adults</h2>
-				<TagGauge spendingRatio={spendingRatio2}></TagGauge>
-			  </Row>
-			</Col>
+      {this.state.isGaugeVisible ? (
+       <Col className="border-r">
+       <Row className="border-b">
+       <h2 className="centered-text">Spending Relative to Other Students</h2>
+       <TagGauge spendingRatio={spendingRatio1}></TagGauge>
+       </Row>
+       <Row>
+       <h2 className="centered-text">Spending Relative to Young Adults</h2>
+       <TagGauge spendingRatio={spendingRatio2}></TagGauge>
+       </Row>
+      </Col>   
+      ) : null}
 			<Col>
 			  <h2 className="centered-text">List of Transactions</h2>
 			  <Table striped bordered hover responsive>
