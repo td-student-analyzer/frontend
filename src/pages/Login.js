@@ -18,10 +18,10 @@ export default function Login() {
                 className="centered-text"
                 style={{ color: 'white' }}
               >
-                Enter your Customer ID to analyze your spending habits.
+                Enter your Customer ID to analyze your spending habits
               </p> 
               <Form className="LoginForm">
-                <Form.Group controlId="formCustomerId" style={{ width: '70%', margin: '1% 15%' }}>
+                <Form.Group controlId="formCustomerId" style={{ width: '70%', margin: '3% 15%' }}>
                   <Form.Control type="id" placeholder="Customer ID" />
                 </Form.Group>
                 <Button variant="dark" type="submit">
